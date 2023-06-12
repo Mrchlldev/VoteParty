@@ -34,7 +34,7 @@ namespace ErikPDev\VoteParty\Listeners;
 use pocketmine\event\Listener;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
-use kingofturkey38\voting38\event\PlayerVoteEvent;
+use kingofturkey38\voting38\events\PlayerVoteEvent;
 use ErikPDev\VoteParty\Main;
 class Voting38Listener implements Listener{
 
