@@ -49,7 +49,7 @@ class Main extends PluginBase implements Listener {
     public $serverData,$versionManager;
     private $prefix;
     private $scoreHud;
-    private $BetterVotingSupport = false;
+    private $Voting38Support = false;
     private $PocketVoteSupport = false;
     private $ScoreHudSupport = false;
 	private bool $ScoreboardSupport;
