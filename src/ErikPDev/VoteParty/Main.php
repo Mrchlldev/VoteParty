@@ -40,7 +40,7 @@ use pocketmine\event\Listener;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\console\ConsoleCommandSender;
-use ErikPDev\VoteParty\Listeners\BetterVotingListener;
+use ErikPDev\VoteParty\Listeners\Voting38Listener;
 use ErikPDev\VoteParty\Listeners\PocketVoteListener;
 use ErikPDev\VoteParty\Listeners\ScoreHUDListener;
 use Throwable;
@@ -66,20 +66,20 @@ class Main extends PluginBase implements Listener {
           return;
         }
         $this->prefix = "§r§l[§eVote§cParty§f]§r ";
-        if($this->getConfig()->get("BetterVotingSupport") == true && $this->getConfig()->get("PocketVoteSupport") == true){
+        if($this->getConfig()->get("Voting38Support") == true && $this->getConfig()->get("PocketVoteSupport") == true){
           $this->getLogger()->critical("BetterVoting and PocketVote support are both setted to `true`, this will cause errors therefore, the plugin is disabling.");
           $this->getServer()->getPluginManager()->disablePlugin($this);
           return;
         }
-        if($this->getServer()->getPluginManager()->getPlugin("BetterVoting") != null && $this->getConfig()->get("BetterVotingSupport") == true){
-          if(!$this->versionManager->isLatest("BetterVoting", 2.0)){
-            $this->getLogger()->critical("This verison of BetterVoting isn't supported, the plugin is disabling.");
+        if($this->getServer()->getPluginManager()->getPlugin("Voting38") != null && $this->getConfig()->get("Voting38Support") == true){
+          if(!$this->versionManager->isLatest("Voting38", 2.0)){
+            $this->getLogger()->critical("This verison of Voting38 isn't supported, the plugin is disabling.");
             $this->getServer()->getPluginManager()->disablePlugin($this);
             return;
           }
-          $this->getServer()->getPluginManager()->registerEvents(new BetterVotingListener($this), $this);
-          $this->BetterVotingSupport = true;
-          $this->getLogger()->debug("BetterVoting support is enabled.");
+          $this->getServer()->getPluginManager()->registerEvents(new Voting38Listener($this), $this);
+          $this->Voting38Support = true;
+          $this->getLogger()->debug("Voting38 support is enabled.");
         }
         if($this->getServer()->getPluginManager()->getPlugin("PocketVote") != null && $this->getConfig()->get("PocketVoteSupport") == true){
           // PocketVote doesn't need a version checker since it's supported with all versions, and I should really clean this code.
@@ -102,16 +102,7 @@ class Main extends PluginBase implements Listener {
           }
         }
 
-        if($this->getServer()->getPluginManager()->getPlugin("Scoreboard") != null){
-          if(!$this->versionManager->isLatest("Scoreboard", 1.2)){
-            $this->getLogger()->critical("This version of Scoreboard isn't supported, Update Scoreboard to the latest version.");
-          }else{
-            $this->ScoreboardSupport = true;
-            $this->getLogger()->debug("Scoreboard support is enabled.");
-          }
-        }
-
-        if($this->getConfig()->get("PocketVoteSupport") == false && $this->getConfig()->get("BetterVotingSupport") == false){
+        if($this->getConfig()->get("PocketVoteSupport") == false && $this->getConfig()->get("Voting38Support") == false){
           $this->getLogger()->debug("VoteParty command is enabled.");
         }
         Server::getInstance()->getAsyncPool()->submitTask(new Update("VoteParty", "1.4"));
@@ -165,7 +156,7 @@ class Main extends PluginBase implements Listener {
       switch (strtolower($cmd->getName())) {
         case "voteparty":
           if($player instanceof Player){ $player->sendMessage($this->prefix.$this->getConfig()->get("ErrorRunning"));return true; }
-          if($this->BetterVotingSupport == true){ $player->sendMessage($this->prefix."BetterVoting is enabled, please don't use this command.");return true; }
+          if($this->BetterVotingSupport == true){ $player->sendMessage($this->prefix."Voting38 is enabled, please don't use this command.");return true; }
           if($this->PocketVoteSupport == true){ $player->sendMessage($this->prefix."PocketVote is enabled, please don't use this command.");return true; }
           $this->PlayerVoted();
           break;
