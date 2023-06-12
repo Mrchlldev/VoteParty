@@ -34,9 +34,9 @@ namespace ErikPDev\VoteParty\Listeners;
 use pocketmine\event\Listener;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
-use twisted\bettervoting\event\PlayerVoteEvent;
+use kingofturkey38\voting38\event\PlayerVoteEvent;
 use ErikPDev\VoteParty\Main;
-class BetterVotingListener implements Listener{
+class Voting38Listener implements Listener{
 
     private $plugin;
 
