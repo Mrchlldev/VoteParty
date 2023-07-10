@@ -67,16 +67,11 @@ class Main extends PluginBase implements Listener {
         }
         $this->prefix = "§r§l[§eVote§cParty§f]§r ";
         if($this->getConfig()->get("Voting38Support") == true && $this->getConfig()->get("PocketVoteSupport") == true){
-          $this->getLogger()->critical("BetterVoting and PocketVote support are both setted to `true`, this will cause errors therefore, the plugin is disabling.");
+          $this->getLogger()->critical("Voting38 and PocketVote support are both setted to `true`, this will cause errors therefore, the plugin is disabling.");
           $this->getServer()->getPluginManager()->disablePlugin($this);
           return;
         }
         if($this->getServer()->getPluginManager()->getPlugin("Voting38") != null && $this->getConfig()->get("Voting38Support") == true){
-          if(!$this->versionManager->isLatest("Voting38", 2.0)){
-            $this->getLogger()->critical("This verison of Voting38 isn't supported, the plugin is disabling.");
-            $this->getServer()->getPluginManager()->disablePlugin($this);
-            return;
-          }
           $this->getServer()->getPluginManager()->registerEvents(new Voting38Listener($this), $this);
           $this->Voting38Support = true;
           $this->getLogger()->debug("Voting38 support is enabled.");
@@ -124,10 +119,10 @@ class Main extends PluginBase implements Listener {
           $data->setVotes($this->getConfig()->get("VotestoVoteParty"));
           $this->getServer()->broadcastMessage($this->prefix.$this->getConfig()->get("WhenReached"));
           foreach ($this->getConfig()->get("commandtoRun") as $value) {
-            if(str_contains($value, "@a")){
+            if(str_contains($value, "{PLAYER}")){
               foreach($this->getServer()->getOnlinePlayers() as $OPlayer){
                 try {
-	                $this->getServer()->dispatchCommand(new ConsoleCommandSender($this->getServer(), $this->getServer()->getLanguage()), str_replace("@a",$OPlayer->getName(),$value));
+	                $this->getServer()->dispatchCommand(new ConsoleCommandSender($this->getServer(), $this->getServer()->getLanguage()), str_replace("{PLAYER}",$OPlayer->getName(),$value));
                 } catch (Throwable $th) {
                   $this->getLogger()->critical($th->getMessage());
                 }
