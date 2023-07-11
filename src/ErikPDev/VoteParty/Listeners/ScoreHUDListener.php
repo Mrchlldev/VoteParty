@@ -53,10 +53,10 @@ class ScoreHUDListener implements Listener{
         $tag = $event->getTag();
     
         switch($tag->getName()){
-            case "voteparty.totalVotes":
+            case "voteparty.votes":
                 $tag->setValue((string)$this->plugin->serverData->getTotalVotes());
             break;
-            case "voteparty.maxVotes":
+            case "voteparty.maxvotes":
                 $tag->setValue((string)$this->plugin->getConfig()->get("VotestoVoteParty"));
             break;
     
@@ -64,7 +64,7 @@ class ScoreHUDListener implements Listener{
     }
     public function update(){
         $ev = new ServerTagUpdateEvent(new ScoreTag(
-			"voteparty.totalVotes",
+			"voteparty.votes",
 		        (string)$this->plugin->serverData->getTotalVotes())
 	);
 	$ev->call();
